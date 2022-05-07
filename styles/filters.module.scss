@@ -1,0 +1,143 @@
+.filters {
+    padding: 0 11px;
+    color: #fff;
+    margin-bottom: 30px;
+    z-index: 2;
+    &__inner {
+        background: linear-gradient(0deg, rgba(51, 53, 60, 0) 0, #33353c 30%, #33353c 100%);
+        padding: 20px 40px;
+        border-radius: 20px 20px 0 0;
+
+    }
+
+    &__title {
+        margin: 20px 0 40px 0;
+        font-size: 24px;
+
+    }
+
+    &__genres {
+        display: flex;
+        flex-wrap: wrap;
+
+        &_title {
+            margin: 0;
+            margin-left: 5px;
+            margin-bottom: 10px;
+        }
+
+        &_content {
+            width: 60%;
+        }
+    }
+
+    &__left {
+        width: 40%;
+        height: 100px;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        &_item {
+            width: 50%;
+
+        }
+    }
+
+    &__sort {
+        border: 1px solid #575a64;
+        border-radius: 5px;
+        padding: 9px 8px;
+        background-color: #33353c;
+        color: #cae962;
+        font-weight: 700;
+        font-size: 14px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        cursor: pointer;
+
+        &_item {
+            cursor: pointer;
+        }
+    }
+
+    &__genre {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 14px;
+
+        &_false {
+            border: 1px solid #575a64;
+            border-radius: 5px;
+            padding: 5px 9px;
+            color: #ddd;
+            margin: 0 6px 6px 0;
+            cursor: pointer;
+            transition: 0.4s;
+
+        }
+
+        &_true {
+            transition: 0.4s;
+            color: #cae962;
+            border: 1px solid #cae962;
+            border-radius: 5px;
+            padding: 5px 9px;
+            margin: 0 6px 6px 0;
+            cursor: pointer;
+        }
+    }
+
+}
+
+@media screen and (max-width: 1050px) {
+    .filters {
+        &__genres {
+            display: inline;
+        }
+
+        &__left {
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            position: relative;
+            flex-wrap: nowrap;
+            padding: 0 300px 0 0;
+
+            &_item {
+                display: inline;
+
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 840px) {
+    .filters {
+        &__left {
+            padding: 0;
+        }
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .filters {
+        padding: 0 5px;
+
+        &__inner {
+            padding: 20px 20px;
+        }
+
+        &__genre {
+            height: 200px;
+            overflow: auto;
+        }
+
+        &__left {
+            height: 100%;
+            display: inline-block;
+        }
+
+    }
+}
