@@ -25,7 +25,9 @@ const App = () => {
       setFetching(true)
     }else{
       setFetching(false)
-      setFetching(true)
+      setTimeout(() => {
+        setFetching(true)
+      }, 200)
     }
   }
 
@@ -73,9 +75,9 @@ const App = () => {
   }, [fetching])
 
   useEffect(() => {
-    console.log(loading);
+    console.log(fetching);
 
-  }, [loading])
+  }, [fetching])
   
 
   useEffect(() => {
