@@ -23,7 +23,7 @@ const App = () => {
   const fetchTrue = () => {
     if (fetching === false) {
       setFetching(true)
-    }else{
+    } else {
       setFetching(false)
       setTimeout(() => {
         setFetching(true)
@@ -35,6 +35,7 @@ const App = () => {
     setPages(undefined)
     setAnime([])
     setFetching(true)
+
   }, [params])
 
   useEffect(() => {
@@ -56,8 +57,8 @@ const App = () => {
   useEffect(() => {
     if (fetching === true) {
       const fetchAnime = async () => {
-          setLoading(true)
-          await axios.get(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=35&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=35&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
+        setLoading(true)
+        await axios.get(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
           .then(res => {
             setPages(res.data)
             setAnime([...anime, ...res.data.results])
@@ -67,7 +68,7 @@ const App = () => {
           .catch((e: AxiosError) => {
             setError(e)
             setLoading(false)
-            setFetching(false) 
+            setFetching(false)
           })
       }
       fetchAnime()
@@ -75,21 +76,15 @@ const App = () => {
   }, [fetching])
 
   useEffect(() => {
-    console.log(fetching);
-
-  }, [fetching])
-  
-
-  useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
     return function () {
       document.removeEventListener('scroll', scrollHandler)
     }
   }, [])
-  
+
   const scrollHandler = (e: any) => {
     if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) <= 500) {
-        setFetching(true)
+      setFetching(true)
     }
   }
 
@@ -131,13 +126,17 @@ const App = () => {
               </div>
             }
             {
-            error?.name === 'AxiosError' ?
-            null
-            :
-            loading === true ?
-              <h1 className={style.loading}>Loading...</h1>
-              :
-              <button onClick={fetchTrue} className={style.next}>ЕЩЕ</button>
+              error?.name === 'AxiosError' ?
+                <p>Вы доскролили до конца.</p>
+                :
+                loading === true ?
+                  <div className={style.box}>
+                    <h1 className={style.box__loading}>Loading...</h1>
+                  </div>
+                  :
+                  <div className={style.box}>
+                    <button onClick={fetchTrue} className={style.box__next}>ЕЩЕ</button>
+                  </div>
             }
           </div>
           <img className={style.list__dio__img} src='/img/dio4.jpg' />
