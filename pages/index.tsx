@@ -27,7 +27,7 @@ const App = () => {
       setFetching(false)
       setTimeout(() => {
         setFetching(true)
-      }, 200)
+      }, 0)
     }
   }
 
