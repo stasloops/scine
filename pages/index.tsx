@@ -21,7 +21,12 @@ const App = () => {
   }
 
   const fetchTrue = () => {
-    setFetching(true)
+    if (fetching === false) {
+      setFetching(true)
+    }else{
+      setFetching(false)
+      setFetching(true)
+    }
   }
 
   useEffect(() => {
