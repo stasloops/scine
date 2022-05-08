@@ -20,6 +20,10 @@ const App = () => {
     window.scrollTo(0, 0)
   }
 
+  const fetchTrue = () => {
+    setFetching(true)
+  }
+
   useEffect(() => {
     setPages(undefined)
     setAnime([])
@@ -62,6 +66,12 @@ const App = () => {
       fetchAnime()
     }
   }, [fetching])
+
+  useEffect(() => {
+    console.log(loading);
+
+  }, [loading])
+  
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler)
@@ -120,7 +130,7 @@ const App = () => {
             loading === true ?
               <h1 className={style.loading}>Loading...</h1>
               :
-              <h1 className={style.loading}></h1>
+              <button onClick={fetchTrue} className={style.next}>ЕЩЕ</button>
             }
           </div>
           <img className={style.list__dio__img} src='/img/dio4.jpg' />

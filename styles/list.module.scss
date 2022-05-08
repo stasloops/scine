@@ -149,8 +149,17 @@
   height: 30px;
 }
 
-.pad {
-  padding: 0 10px;
+.next{
+    background-color: #cae962;
+    width: 100px;
+    border: none;
+    color: #202125;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    margin: 30px 50px;
+
 }
 
 @media screen and (min-width: 2400px) {
