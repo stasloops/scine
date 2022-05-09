@@ -109,10 +109,9 @@ const App = () => {
               <div className={style.list__cards}>
                 {
                   newAnime.map((item, id) => (
-
                     <Link key={`${item.id}-${id}`} href={`/anime/${item.id}`} >
                       <a className={style.list__card}>
-                        <Image priority quality={100} width={220} height={300} className={style.list__card__img} src={item.material_data?.poster_url} alt='anime poster' />
+                        <img className={style.list__card__img} src={item.material_data?.poster_url} alt='anime poster' />
                         <div className={style.list__card__content}>
                           <h2 className={style.list__card__title}>{item.material_data?.anime_title}</h2>
                           <span>
