@@ -14,28 +14,14 @@ const App = () => {
   const [newAnime, setNewAnime] = useState<any[]>([])
   const [params, setParams] = useState<any>({ valueSort: 'shikimori_rating', valueGenres: '', valueType: 'tv', valueYear: '' })
   const [opacity, setOpacity] = useState<boolean>(false)
-  const [error, setError] = useState<any>()
-
-  const onScroll = () => {
-    window.scrollTo(0, 0)
-  }
-
-  const fetchTrue = () => {
-    if (fetching === false) {
-      setFetching(true)
-    } else {
-      setFetching(false)
-      setTimeout(() => {
-        setFetching(true)
-      }, 0)
-    }
-  }
+  const [count, setCount] = useState<number>(0)
+  const [totalCount, setTotalCount] = useState<number>(100)
 
   useEffect(() => {
     setPages(undefined)
     setAnime([])
     setFetching(true)
-
+    setCount(0)
   }, [params])
 
   useEffect(() => {
@@ -55,23 +41,20 @@ const App = () => {
   }
 
   useEffect(() => {
+    const fetchAnime = async () => {
+      setLoading(true)
+      const res = await axios.get(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
+      setPages(res.data)
+      setAnime([...anime, ...res.data.results])
+      setLoading(false)
+      setFetching(false)
+      setCount(count + 1)
+    }
+
     if (fetching === true) {
-      const fetchAnime = async () => {
-        setLoading(true)
-        await axios.get(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
-          .then(res => {
-            setPages(res.data)
-            setAnime([...anime, ...res.data.results])
-            setLoading(false)
-            setFetching(false)
-          })
-          .catch((e: AxiosError) => {
-            setError(e)
-            setLoading(false)
-            setFetching(false)
-          })
+      if (count !== totalCount) {
+        fetchAnime()
       }
-      fetchAnime()
     }
   }, [fetching])
 
@@ -93,6 +76,25 @@ const App = () => {
     anime.forEach((p: any) => dataMap.set(p.worldart_link, p));
     setNewAnime([...dataMap.values()])
   }, [anime])
+
+  useEffect(() => {
+    setTotalCount(Math.ceil(pages?.total / 45))
+  }, [pages?.total])
+
+  const onScroll = () => {
+    window.scrollTo(0, 0)
+  }
+
+  const fetchTrue = () => {
+    if (fetching === false) {
+      setFetching(true)
+    } else {
+      setFetching(false)
+      setTimeout(() => {
+        setFetching(true)
+      }, 0)
+    }
+  }
 
   return (<>
     <Layout title="Смотреть Аниме онлайн бесплатно в хорошем качестве" >
@@ -126,12 +128,14 @@ const App = () => {
               </div>
             }
             {
-              error?.name === 'AxiosError' ?
-                <p>Вы доскролили до конца.</p>
+              count === totalCount ?
+                <div className={style.box}>
+                  <p className={style.box__end}>С этими фильтрами, аниме больше нет.</p>
+                </div>
                 :
                 loading === true ?
                   <div className={style.box}>
-                    <h1 className={style.box__loading}>Loading...</h1>
+                    <p className={style.box__loading}>Loading...</p>
                   </div>
                   :
                   <div className={style.box}>
