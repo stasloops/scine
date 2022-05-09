@@ -46,9 +46,9 @@ const App = () => {
       const res = await axios.get(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
       setPages(res.data)
       setAnime([...anime, ...res.data.results])
-      setLoading(false)
       setFetching(false)
       setCount(count + 1)
+      setLoading(false)
     }
 
     if (fetching === true) {
@@ -112,7 +112,7 @@ const App = () => {
 
                     <Link key={`${item.id}-${id}`} href={`/anime/${item.id}`} >
                       <a className={style.list__card}>
-                        <img className={style.list__card__img} src={item.material_data?.poster_url} alt='anime poster' />
+                        <Image priority quality={100} width={220} height={300} className={style.list__card__img} src={item.material_data?.poster_url} alt='anime poster' />
                         <div className={style.list__card__content}>
                           <h2 className={style.list__card__title}>{item.material_data?.anime_title}</h2>
                           <span>
