@@ -349,8 +349,9 @@
                 transform: scale(1);
             }
 
-            &-content {
-                padding: 10px 5px 0 10px;
+            &__content {
+                padding: 7px 0 0 7px;
+                
             }
         }
 
@@ -365,6 +366,7 @@
 
         &__inner {
             padding: 0;
+            overflow: hidden;
         }
 
         &__card__episodes {
@@ -372,8 +374,9 @@
         }
 
         &__card__title {
-            width: 95%;
+            width: 90%;
             font-size: 17px;
+            overflow-wrap: break-word;
         }
     }
 }

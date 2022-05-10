@@ -1,7 +1,7 @@
 import Link from "next/link"
 import style from '../styles/list.module.scss'
 import { useEffect, useState } from "react"
-import axios, { AxiosError } from "axios"
+import axios from "axios"
 import Layout from "../layout/Layout"
 import Filters from "../components/filters/Filters"
 import Image from "next/image"
@@ -51,10 +51,8 @@ const App = () => {
       setLoading(false)
     }
 
-    if (fetching === true) {
-      if (count !== totalCount) {
-        fetchAnime()
-      }
+    if (fetching === true && count !== totalCount && totalCount !== 0) {
+      fetchAnime()
     }
   }, [fetching])
 
@@ -79,7 +77,21 @@ const App = () => {
 
   useEffect(() => {
     setTotalCount(Math.ceil(pages?.total / 45))
+    console.log(pages);
+
   }, [pages?.total])
+
+  useEffect(() => {
+
+    console.log(totalCount);
+
+  }, [totalCount])
+
+  useEffect(() => {
+
+    console.log(count);
+
+  }, [count])
 
   const onScroll = () => {
     window.scrollTo(0, 0)
@@ -132,14 +144,19 @@ const App = () => {
                   <p className={style.box__end}>С этими фильтрами, аниме больше нет.</p>
                 </div>
                 :
-                loading === true ?
+                totalCount === 0 ?
                   <div className={style.box}>
-                    <p className={style.box__loading}>Loading...</p>
+                    <p className={style.box__end}>С этими фильтрами, аниме больше нет.</p>
                   </div>
                   :
-                  <div className={style.box}>
-                    <button onClick={fetchTrue} className={style.box__next}>ЕЩЕ</button>
-                  </div>
+                  loading === true ?
+                    <div className={style.box}>
+                      <p className={style.box__loading}>Loading...</p>
+                    </div>
+                    :
+                    <div className={style.box}>
+                      <button onClick={fetchTrue} className={style.box__next}>ЕЩЕ</button>
+                    </div>
             }
           </div>
           <img className={style.list__dio__img} src='/img/dio4.jpg' />
