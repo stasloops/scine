@@ -12,7 +12,6 @@ const Header = () => {
         if (value.length > 0) {
             router.push(`/search/${value}`)
             setValue('')
-            
         }
     }
 

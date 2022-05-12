@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
-import Image from 'next/image'
 import React from 'react'
 import Layout from '../../layout/Layout'
 import style from '../../styles/animePage.module.scss'
+
+type AnimeProps = {
+    title: string
+}
 
 const AnimePage = ({ anime }: any) => {
     return (<>
@@ -22,7 +25,7 @@ const AnimePage = ({ anime }: any) => {
                                     <div className={style.anime__genres}><span>Жанры: </span>
                                         <span>
                                             {
-                                                anime.material_data?.anime_genres.map((item: any, id: number) => (
+                                                anime.material_data?.anime_genres.map((item: any , id: number) => (
                                                     <span key={id}>
                                                         <span className={style.anime__genres_item}>{item}</span><span className={style.anime__b}>,</span>
                                                     </span>
@@ -40,16 +43,16 @@ const AnimePage = ({ anime }: any) => {
                         </div>
                     </div>
                 </div>
-           
         </Layout>
     </>)
 }
 
 export default AnimePage
 
-export const getServerSideProps: GetServerSideProps = async ({ params }: any) => {
-    const response = await axios.get(`https://kodikapi.com/search?token=30ef128890b06e03700a3628b91c87c2&id=${params.id}&with_material_data=true`)
+export const getServerSideProps: GetServerSideProps = async ({query}) => {
+    const response = await axios.get(`https://kodikapi.com/search?token=30ef128890b06e03700a3628b91c87c2&id=${query.param}&with_material_data=true`)
     const anime = response.data.results[0]
+    
     return {
         props: { anime }
     }

@@ -3,17 +3,24 @@ import style from '../../styles/filters.module.scss'
 import Genre from '../genre/Genre'
 import { filterDataGenres, filterDataSort, filterDataType, filterDataYear } from './filter-data'
 
+type ValueProps = {
+    valueSort: string
+    valueGenres: string
+    valueType: string
+    valueYear: string
+}
+
 type Props = {
     setParams: (value: any) => void
 }
 
-const Filters:FC<Props> = ({setParams}) => {
-    const [value, setValue] = useState<any>({ valueSort: 'shikimori_rating', valueGenres: '', valueType: 'tv', valueYear: '' })
+const Filters: FC<Props> = ({ setParams }) => {
+    const [value, setValue] = useState<ValueProps>({ valueSort: 'shikimori_rating', valueGenres: '', valueType: 'tv', valueYear: '' })
     const [genre, setGenre] = useState<string>('')
-    const [activeGenre, setActiveGenre] = useState<any[]>([])
+    const [activeGenre, setActiveGenre] = useState<string[]>([])
 
-    const handleGenre = (gen: any) => {
-        const index = activeGenre.findIndex((ele: any) => ele === gen)
+    const handleGenre = (gen: string) => {
+        const index = activeGenre.findIndex((ele: string) => ele === gen)
         if (index === -1) {
             setActiveGenre([...activeGenre, gen])
         }
@@ -22,9 +29,9 @@ const Filters:FC<Props> = ({setParams}) => {
             setGenre(activeGenre.join(','))
         }
     }
-    
+
     useEffect(() => {
-       setGenre(activeGenre.join(','))
+        setGenre(activeGenre.join(','))
     }, [activeGenre])
 
     useEffect(() => {
@@ -34,9 +41,9 @@ const Filters:FC<Props> = ({setParams}) => {
     useEffect(() => {
         setParams(value)
     }, [value])
-    
-  return (
-    <div className={style.filters}>
+
+    return (
+        <div className={style.filters}>
             <div className={style.filters__inner}>
                 <h3 className={style.filters__title}>Фильтры</h3>
                 <form className={style.filters__genres}>
@@ -97,7 +104,7 @@ const Filters:FC<Props> = ({setParams}) => {
                 </form>
             </div>
         </div >
-  )
+    )
 }
 
 export default Filters

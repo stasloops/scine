@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -35,27 +34,30 @@ const Search = () => {
               <h6 className={style.search__result}>{'Результатов: ' + newSearch?.length}</h6>
             </div>
             {
-                <div className={style.search__cards}>
-                  {
-                    search.length === 0 ?
-                      <h2 className={style.fff}>Попробуйте ввести название аниме по-другому. В случае, если вам все равно не удалось найти нужное вам аниме, напишите мне.</h2>
-                      :
-                      newSearch?.map((item: any, id: number) => (
-                        <Link key={`${item.id}-${id}`} href={`/anime/${item.id}`} >
-                          <a className={style.search__card}>
-                            <img className={style.search__card__img} src={item.material_data?.poster_url} alt='search poster' />
-                            <div className={style.search__card__content}>
-                              <h2 className={style.search__card__title}>{item.material_data?.anime_title}</h2>
-                              <span>
-                                <span className={style.search__card__episodes}>{item.last_season === undefined ? "" : item.last_season + " сезон"} </span>
-                                <span className={style.search__card__episodes}>{item.material_data?.anime_kind === "movie" ? "Фильм" : item.material_data?.anime_kind === 'tv' ? 'TV сериал' : item.material_data?.anime_kind === 'ova' ? 'OVA' : 'Спешл'}</span>
-                              </span>
-                            </div>
-                          </a>
-                        </Link>
-                      ))
-                  }
-                </div>
+              <div className={style.search__cards}>
+                {
+                  search.length === 0 ?
+                    <h2 className={style.fff}>Попробуйте ввести название аниме по-другому. В случае, если вам все равно не удалось найти нужное вам аниме, напишите мне.</h2>
+                    :
+                    newSearch?.map((item: any, id: number) => (
+                      <Link key={`${item.id}-${id}`} href={{
+                        pathname: `/anime/${item.material_data.title_en}`,
+                        query: { param: `${item.id}` },
+                      }} >
+                        <a className={style.search__card}>
+                          <img className={style.search__card__img} src={item.material_data?.poster_url} alt='search poster' />
+                          <div className={style.search__card__content}>
+                            <h2 className={style.search__card__title}>{item.material_data?.anime_title}</h2>
+                            <span>
+                              <span className={style.search__card__episodes}>{item.last_season === undefined ? "" : item.last_season + " сезон"} </span>
+                              <span className={style.search__card__episodes}>{item.material_data?.anime_kind === "movie" ? "Фильм" : item.material_data?.anime_kind === 'tv' ? 'TV сериал' : item.material_data?.anime_kind === 'ova' ? 'OVA' : 'Спешл'}</span>
+                            </span>
+                          </div>
+                        </a>
+                      </Link>
+                    ))
+                }
+              </div>
             }
           </div>
         </div>

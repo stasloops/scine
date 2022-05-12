@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import Layout from "../layout/Layout"
 import Filters from "../components/filters/Filters"
-import Image from "next/image"
 
 const App = () => {
   const [fetching, setFetching] = useState<boolean>(true)
@@ -73,25 +72,12 @@ const App = () => {
     let dataMap: any = new Map();
     anime.forEach((p: any) => dataMap.set(p.worldart_link, p));
     setNewAnime([...dataMap.values()])
+    console.log(anime);
   }, [anime])
 
   useEffect(() => {
     setTotalCount(Math.ceil(pages?.total / 45))
-    console.log(pages);
-
   }, [pages?.total])
-
-  useEffect(() => {
-
-    console.log(totalCount);
-
-  }, [totalCount])
-
-  useEffect(() => {
-
-    console.log(count);
-
-  }, [count])
 
   const onScroll = () => {
     window.scrollTo(0, 0)
@@ -121,7 +107,10 @@ const App = () => {
               <div className={style.list__cards}>
                 {
                   newAnime.map((item, id) => (
-                    <Link key={`${item.id}-${id}`} href={`/anime/${item.id}`} >
+                    <Link key={`${item.id}-${id}`} href={{
+                      pathname: `/anime/${item.material_data.title_en}`,
+                      query: { param: `${item.id}` },
+                    }} >
                       <a className={style.list__card}>
                         <img className={style.list__card__img} src={item.material_data?.poster_url} alt='anime poster' />
                         <div className={style.list__card__content}>

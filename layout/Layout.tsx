@@ -1,13 +1,13 @@
 import Head from 'next/head'
-import React, { FC } from 'react'
+import React, { FC, ReactNode } from 'react'
 import Header from '../components/header/Header'
 
 type Props = {
-    children: any
+    children: ReactNode
     title: string
 }
 
-const Layout: FC<Props> = ({ children, title }:any) => {
+const Layout: FC<Props> = ({ children, title }) => {
     return (<div className='layout'>
         <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -1,23 +1,26 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import style from '../../styles/genre.module.scss'
 
-type GenreProps = {
-    item: any
-    handleGenre: (value: string) => void
+type GenreItemProps = {
+  value: string
 }
 
-const Genre: FC<GenreProps> = ({item, handleGenre}) => {
+type Props = {
+  item: GenreItemProps
+  handleGenre: (value: string) => void
+}
 
-    const [active, setActive] = useState<boolean>(true)
+const Genre: FC<Props> = ({ item, handleGenre }) => {
+  const [active, setActive] = useState<boolean>(true)
 
-    const toggleButton = (item: string) => {
-        setActive(!active)
-        handleGenre(item)
-    }
+  const toggleButton = (item: string) => {
+    setActive(!active)
+    handleGenre(item)
+  }
 
   return (
-    <div  onClick={() => toggleButton(item.value)} className={`${active === true ? style.false : style.true}`}>
-        {item.value}
+    <div onClick={() => toggleButton(item.value)} className={`${active === true ? style.false : style.true}`}>
+      {item.value}
     </div>
   )
 }
