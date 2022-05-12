@@ -1,20 +1,14 @@
 import React, { FC, useEffect, useState } from 'react'
 import style from '../../styles/filters.module.scss'
+import { ValueProps } from '../../type/type'
 import Genre from '../genre/Genre'
 import { filterDataGenres, filterDataSort, filterDataType, filterDataYear } from './filter-data'
 
-type ValueProps = {
-    valueSort: string
-    valueGenres: string
-    valueType: string
-    valueYear: string
+type FiltersProps = {
+    setParams: (value: ValueProps) => void
 }
 
-type Props = {
-    setParams: (value: any) => void
-}
-
-const Filters: FC<Props> = ({ setParams }) => {
+const Filters: FC<FiltersProps> = ({ setParams }) => {
     const [value, setValue] = useState<ValueProps>({ valueSort: 'shikimori_rating', valueGenres: '', valueType: 'tv', valueYear: '' })
     const [genre, setGenre] = useState<string>('')
     const [activeGenre, setActiveGenre] = useState<string[]>([])

@@ -4,23 +4,24 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Layout from '../../layout/Layout'
 import style from '../../styles/search.module.scss'
+import { AnimeProps, KodikProps } from '../../type/type'
 
 const Search = () => {
-  const [newSearch, setNewSearch] = useState<any[]>([])
-  const [search, setSearch] = useState<any[]>([])
-
+  const [newSearch, setNewSearch] = useState<AnimeProps[]>([])
+  const [search, setSearch] = useState<AnimeProps[]>([])
   const { query } = useRouter()
+
   useEffect(() => {
     const fetchSearch = async () => {
-      const response = await axios.get(`https://kodikapi.com/search?token=30ef128890b06e03700a3628b91c87c2&title=${query.id}&types=anime-serial,anime&with_material_data=true`)
+      const response = await axios.get<KodikProps>(`https://kodikapi.com/search?token=30ef128890b06e03700a3628b91c87c2&title=${query.id}&types=anime-serial,anime&with_material_data=true`)
       setSearch(response.data.results)
     }
     fetchSearch()
   }, [query.id])
 
   useEffect(() => {
-    let cityMap: any = new Map();
-    search.forEach((p: any) => cityMap.set(p.worldart_link, p));
+    let cityMap:any = new Map();
+    search.forEach((p: AnimeProps) => cityMap.set(p.worldart_link, p));
     setNewSearch([...cityMap.values()])
   }, [search])
 

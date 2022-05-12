@@ -7,7 +7,7 @@ const Header = () => {
     const [value, setValue] = useState<string>('')
     const router = useRouter()
 
-    const onNavigateSearch = (e: any) => {
+    const onNavigateSearch = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         if (value.length > 0) {
             router.push(`/search/${value}`)

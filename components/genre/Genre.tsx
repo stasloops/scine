@@ -5,12 +5,12 @@ type GenreItemProps = {
   value: string
 }
 
-type Props = {
+type GenreProps = {
   item: GenreItemProps
   handleGenre: (value: string) => void
 }
 
-const Genre: FC<Props> = ({ item, handleGenre }) => {
+const Genre: FC<GenreProps> = ({ item, handleGenre }) => {
   const [active, setActive] = useState<boolean>(true)
 
   const toggleButton = (item: string) => {

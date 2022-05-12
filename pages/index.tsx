@@ -4,14 +4,15 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import Layout from "../layout/Layout"
 import Filters from "../components/filters/Filters"
+import { AnimeProps, KodikProps, ValueProps } from "../type/type"
 
 const App = () => {
   const [fetching, setFetching] = useState<boolean>(true)
   const [loading, setLoading] = useState<boolean>(false)
-  const [pages, setPages] = useState<any>(undefined)
-  const [anime, setAnime] = useState<any[]>([])
-  const [newAnime, setNewAnime] = useState<any[]>([])
-  const [params, setParams] = useState<any>({ valueSort: 'shikimori_rating', valueGenres: '', valueType: 'tv', valueYear: '' })
+  const [pages, setPages] = useState<KodikProps | undefined >(undefined)
+  const [anime, setAnime] = useState<AnimeProps[]>([])
+  const [newAnime, setNewAnime] = useState<AnimeProps[]>([])
+  const [params, setParams] = useState<ValueProps>({ valueSort: 'shikimori_rating', valueGenres: '', valueType: 'tv', valueYear: '' })
   const [opacity, setOpacity] = useState<boolean>(false)
   const [count, setCount] = useState<number>(0)
   const [totalCount, setTotalCount] = useState<number>(100)
@@ -42,7 +43,9 @@ const App = () => {
   useEffect(() => {
     const fetchAnime = async () => {
       setLoading(true)
-      const res = await axios.get(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
+      const res = await axios.get<KodikProps>(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
+     console.log(res.data);
+     
       setPages(res.data)
       setAnime([...anime, ...res.data.results])
       setFetching(false)
@@ -70,13 +73,15 @@ const App = () => {
 
   useEffect(() => {
     let dataMap: any = new Map();
-    anime.forEach((p: any) => dataMap.set(p.worldart_link, p));
+    anime.forEach((p: AnimeProps) => dataMap.set(p.worldart_link, p));
     setNewAnime([...dataMap.values()])
     console.log(anime);
   }, [anime])
 
   useEffect(() => {
-    setTotalCount(Math.ceil(pages?.total / 45))
+    if(pages?.total){
+    setTotalCount(Math.ceil(pages.total / 45))
+    }
   }, [pages?.total])
 
   const onScroll = () => {
@@ -116,7 +121,7 @@ const App = () => {
                         <div className={style.list__card__content}>
                           <h2 className={style.list__card__title}>{item.material_data?.anime_title}</h2>
                           <span>
-                            <span className={style.list__card__episodes}>{item.last_season === undefined ? "" : item.last_season + " сезон"} </span>
+                            <span className={style.list__card__episodes}>{item.last_season === undefined ? "" : item.last_season + " сезон"}</span>
                             <span className={style.list__card__episodes}>{item.material_data?.anime_kind === "movie" ? "Фильм" : item.material_data?.anime_kind === 'tv' ? 'TV сериал' : item.material_data?.anime_kind === 'ova' ? 'OVA' : 'Спешл'}</span>
                           </span>
                         </div>

@@ -1,14 +1,14 @@
 import axios from 'axios'
 import { GetServerSideProps } from 'next'
-import React from 'react'
+import React, { FC } from 'react'
 import Layout from '../../layout/Layout'
 import style from '../../styles/animePage.module.scss'
+import { AnimeProps, KodikProps } from '../../type/type'
 
-type AnimeProps = {
-    title: string
+type AnimePageProps = {
+    anime: AnimeProps
 }
-
-const AnimePage = ({ anime }: any) => {
+const AnimePage:FC<AnimePageProps> = ({anime}) => {
     return (<>
         <Layout title={`${anime.material_data?.title} ${anime.last_season ? '(' + anime.last_season + ' cезон)' : ''} смотреть онлайн — Аниме`} >
             <div className={style.anime__back_filter}>
@@ -50,8 +50,8 @@ const AnimePage = ({ anime }: any) => {
 export default AnimePage
 
 export const getServerSideProps: GetServerSideProps = async ({query}) => {
-    const response = await axios.get(`https://kodikapi.com/search?token=30ef128890b06e03700a3628b91c87c2&id=${query.param}&with_material_data=true`)
-    const anime = response.data.results[0]
+    const response = await axios.get<KodikProps>(`https://kodikapi.com/search?token=30ef128890b06e03700a3628b91c87c2&id=${query.param}&with_material_data=true`)
+    const anime: AnimeProps = response.data.results[0]
     
     return {
         props: { anime }
