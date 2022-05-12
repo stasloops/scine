@@ -40,7 +40,7 @@ const Search = () => {
                   search.length === 0 ?
                     <h2 className={style.fff}>Попробуйте ввести название аниме по-другому. В случае, если вам все равно не удалось найти нужное вам аниме, напишите мне.</h2>
                     :
-                    newSearch?.map((item: any, id: number) => (
+                    newSearch?.map((item, id) => (
                       <Link key={`${item.id}-${id}`} href={{
                         pathname: `/anime/${item.material_data.title_en}`,
                         query: { param: `${item.id}` },

@@ -8,6 +8,7 @@ import { AnimeProps, KodikProps } from '../../type/type'
 type AnimePageProps = {
     anime: AnimeProps
 }
+
 const AnimePage:FC<AnimePageProps> = ({anime}) => {
     return (<>
         <Layout title={`${anime.material_data?.title} ${anime.last_season ? '(' + anime.last_season + ' cезон)' : ''} смотреть онлайн — Аниме`} >
@@ -25,7 +26,7 @@ const AnimePage:FC<AnimePageProps> = ({anime}) => {
                                     <div className={style.anime__genres}><span>Жанры: </span>
                                         <span>
                                             {
-                                                anime.material_data?.anime_genres.map((item: any , id: number) => (
+                                                anime.material_data?.anime_genres.map((item, id) => (
                                                     <span key={id}>
                                                         <span className={style.anime__genres_item}>{item}</span><span className={style.anime__b}>,</span>
                                                     </span>

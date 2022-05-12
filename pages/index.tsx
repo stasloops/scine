@@ -1,6 +1,6 @@
 import Link from "next/link"
 import style from '../styles/list.module.scss'
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Layout from "../layout/Layout"
 import Filters from "../components/filters/Filters"

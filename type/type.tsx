@@ -1,5 +1,5 @@
 type MaterialDataProps = {
-    anime_genres: any[]
+    anime_genres: string[]
     anime_kind: string
     anime_title: string
     anime_description: string

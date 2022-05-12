@@ -36,6 +36,18 @@ const Filters: FC<FiltersProps> = ({ setParams }) => {
         setParams(value)
     }, [value])
 
+    const changeValueSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setValue({ ...value, valueSort: e.target.value })
+    }
+
+    const changeValueType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setValue({ ...value, valueType: e.target.value })
+    }
+
+    const changeValueYear = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setValue({ ...value, valueYear: e.target.value })
+    }
+
     return (
         <div className={style.filters}>
             <div className={style.filters__inner}>
@@ -44,7 +56,7 @@ const Filters: FC<FiltersProps> = ({ setParams }) => {
                     <div className={style.filters__left}>
                         <label className={style.filters__left_item}>
                             <h5 className={style.filters__genres_title}>Сортировка по</h5>
-                            <select value={value.valueSort} onChange={e => setValue({ ...value, valueSort: e.target.value })} className={style.filters__sort}>
+                            <select value={value.valueSort} onChange={e => changeValueSort(e)} className={style.filters__sort}>
                                 {
                                     filterDataSort.map((item, id) => (
                                         <option key={id} value={item.value} className={style.filters__sort_item}>
@@ -56,7 +68,7 @@ const Filters: FC<FiltersProps> = ({ setParams }) => {
                         </label>
                         <label className={style.filters__left_item}>
                             <h5 className={style.filters__genres_title}>Тип</h5>
-                            <select value={value.valueType} onChange={e => setValue({ ...value, valueType: e.target.value })} className={style.filters__sort}>
+                            <select value={value.valueType} onChange={e => changeValueType(e)} className={style.filters__sort}>
                                 <option value='' className={style.filters__sort_item}>
                                     Все типы
                                 </option>
@@ -71,7 +83,7 @@ const Filters: FC<FiltersProps> = ({ setParams }) => {
                         </label>
                         <label className={style.filters__left_item}>
                             <h5 className={style.filters__genres_title}>Год</h5>
-                            <select value={value.valueYear} onChange={e => setValue({ ...value, valueYear: e.target.value })} className={style.filters__sort}>
+                            <select value={value.valueYear} onChange={e => changeValueYear(e)} className={style.filters__sort}>
                                 <option value='' className={style.filters__sort_item}>
                                     Год
                                 </option>
