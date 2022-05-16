@@ -1,4 +1,5 @@
 import { FC, useState } from 'react'
+
 import style from '../../styles/genre.module.scss'
 
 type GenreItemProps = {
@@ -17,7 +18,7 @@ const Genre: FC<GenreProps> = ({ item, handleGenre }) => {
     setActive(!active)
     handleGenre(item)
   }
-
+  
   return (
     <div onClick={() => toggleButton(item.value)} className={`${active === true ? style.false : style.true}`}>
       {item.value}

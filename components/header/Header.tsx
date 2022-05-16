@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { memo, useState } from "react"
 import style from '../../styles/header.module.scss'
 
 const Header = () => {
@@ -34,4 +34,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default memo(Header)

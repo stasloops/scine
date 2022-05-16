@@ -1,10 +1,10 @@
-import Link from "next/link"
 import style from '../styles/list.module.scss'
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Layout from "../layout/Layout"
 import Filters from "../components/filters/Filters"
 import { AnimeProps, KodikProps, ValueProps } from "../type/type"
+import AnimeCard from "../components/anime-card/AnimeCard"
 
 const App = () => {
   const [fetching, setFetching] = useState<boolean>(true)
@@ -44,15 +44,12 @@ const App = () => {
     const fetchAnime = async () => {
       setLoading(true)
       const res = await axios.get<KodikProps>(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
-     console.log(res.data);
-     
       setPages(res.data)
       setAnime([...anime, ...res.data.results])
       setFetching(false)
       setCount(count + 1)
       setLoading(false)
     }
-
     if (fetching === true && count !== totalCount && totalCount !== 0) {
       fetchAnime()
     }
@@ -75,7 +72,6 @@ const App = () => {
     let dataMap: any = new Map();
     anime.forEach((p: AnimeProps) => dataMap.set(p.worldart_link, p));
     setNewAnime([...dataMap.values()])
-    console.log(anime);
   }, [anime])
 
   useEffect(() => {
@@ -88,7 +84,7 @@ const App = () => {
     window.scrollTo(0, 0)
   }
 
-  const fetchTrue = () => {
+  const fetchTrue = () => {    
     if (fetching === false) {
       setFetching(true)
     } else {
@@ -112,22 +108,7 @@ const App = () => {
               <div className={style.list__cards}>
                 {
                   newAnime.map((item, id) => (
-                    <Link key={`${item.id}-${id}`} href={{
-                      pathname: `/anime/${item.material_data.title_en}`,
-                      query: { param: `${item.id}` },
-                    }} >
-                      <a className={style.list__card}>
-                        <img className={style.list__card__img} src={item.material_data?.poster_url} alt='anime poster' />
-                        <div className={style.list__card__content}>
-                          <h2 className={style.list__card__title}>{item.material_data?.anime_title}</h2>
-                          <span>
-                            <span className={style.list__card__episodes}>{item.last_season === undefined ? "" : item.last_season + " сезон"}</span>
-                            <span className={style.list__card__episodes}>{item.material_data?.anime_kind === "movie" ? "Фильм" : item.material_data?.anime_kind === 'tv' ? 'TV сериал' : item.material_data?.anime_kind === 'ova' ? 'OVA' : 'Спешл'}</span>
-                          </span>
-                        </div>
-                      </a>
-                    </Link>
-
+                    <AnimeCard key={`${item.id}-${id}`} item={item} id={id}/>
                   ))
                 }
               </div>

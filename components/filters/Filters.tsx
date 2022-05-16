@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, memo, useEffect, useState } from 'react'
 import style from '../../styles/filters.module.scss'
 import { ValueProps } from '../../type/type'
 import Genre from '../genre/Genre'
@@ -113,4 +113,4 @@ const Filters: FC<FiltersProps> = ({ setParams }) => {
     )
 }
 
-export default Filters
+export default memo(Filters)
