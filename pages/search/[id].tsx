@@ -11,11 +11,12 @@ const Search = () => {
   const [search, setSearch] = useState<AnimeProps[]>([])
   const { query } = useRouter()
 
+  const fetchSearch = async () => {
+    const response = await axios.get<KodikProps>(`https://kodikapi.com/search?token=30ef128890b06e03700a3628b91c87c2&title=${query.id}&types=anime-serial,anime&with_material_data=true`)
+    setSearch(response.data.results)
+  }
+  
   useEffect(() => {
-    const fetchSearch = async () => {
-      const response = await axios.get<KodikProps>(`https://kodikapi.com/search?token=30ef128890b06e03700a3628b91c87c2&title=${query.id}&types=anime-serial,anime&with_material_data=true`)
-      setSearch(response.data.results)
-    }
     fetchSearch()
   }, [query.id])
 
@@ -42,7 +43,7 @@ const Search = () => {
                     :
                     newSearch?.map((item, id) => (
                       <Link key={`${item.id}-${id}`} href={{
-                        pathname: `/anime/${item.material_data.title_en}`,
+                        pathname: `/anime/${item.material_data?.title_en}`,
                         query: { param: `${item.id}` },
                       }} >
                         <a className={style.search__card}>

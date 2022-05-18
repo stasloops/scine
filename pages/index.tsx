@@ -40,16 +40,17 @@ const App = () => {
     }
   }
 
+  const fetchAnime = async () => {
+    setLoading(true)
+    const res = await axios.get<KodikProps>(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
+    setPages(res.data)
+    setAnime([...anime, ...res.data.results])
+    setFetching(false)
+    setCount(count + 1)
+    setLoading(false)
+  }
+
   useEffect(() => {
-    const fetchAnime = async () => {
-      setLoading(true)
-      const res = await axios.get<KodikProps>(pages?.next_page === undefined ? `https://kodikapi.com/list?token=30ef128890b06e03700a3628b91c87c2&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}` : `${pages.next_page}&with_material_data=true&translation_id=609,739,2068,557,827&limit=45&sort=${params.valueSort}&anime_genres=${params.valueGenres}&anime_kind=${params.valueType}${params.valueYear.length === 0 ? '' : '&year=' + params.valueYear}`)
-      setPages(res.data)
-      setAnime([...anime, ...res.data.results])
-      setFetching(false)
-      setCount(count + 1)
-      setLoading(false)
-    }
     if (fetching === true && count !== totalCount && totalCount !== 0) {
       fetchAnime()
     }
