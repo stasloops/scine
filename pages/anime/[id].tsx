@@ -38,9 +38,9 @@ const AnimePage:FC<AnimePageProps> = ({anime}) => {
                                 </div>
                             </div>
                             <strong className={style.anime__video_title}>Смотреть аниме «<span className={style.cae962}>{anime.material_data?.title}</span>» онлайн</strong>
-                            <iframe className={style.anime__video} src={anime.link}
+                            {/* <iframe className={style.anime__video} src={anime.link}
                                 allow="autoplay; fullscreen"
-                            ></iframe>
+                            ></iframe> */}
                         </div>
                     </div>
                 </div>
