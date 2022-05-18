@@ -12,9 +12,9 @@ type AnimePageProps = {
 const AnimePage:FC<AnimePageProps> = ({anime}) => {
     return (<>
         <Layout title={`${anime.material_data?.title} ${anime.last_season ? '(' + anime.last_season + ' cезон)' : ''} смотреть онлайн — Аниме`} >
-            <div className={style.anime__back_filter}>
+            {/* <div className={style.anime__back_filter}>
             </div>
-                <img src={anime.material_data?.poster_url} className={style.anime__background} />
+                <img src={anime.material_data?.poster_url} className={style.anime__background} /> */}
                 <div className={style.anime}>
                     <div className={style.anime__container}>
                         <div className={style.anime__inner}>
