@@ -4,8 +4,7 @@
     top: 120px;
     background-color: #202125;
     min-height: 140vh;
-    padding-bottom: 20px;
-
+    padding-bottom: 70px;
     &__arrow {
         width: 60px;
         position: fixed;
@@ -129,6 +128,7 @@
     &__end{
         font-size: 24px;
         color: #fff;
+        margin-bottom: 80px;
     }
 
     &__loading {

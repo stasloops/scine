@@ -50,7 +50,7 @@ const App = () => {
     setLoading(false)
   }
 
-  useEffect(() => {
+  useEffect(() => {   
     if (fetching === true && count !== totalCount && totalCount !== 0) {
       fetchAnime()
     }
